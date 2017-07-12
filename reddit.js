@@ -55,7 +55,8 @@ class RedditAPI {
          */
         return this.conn.query(
             `
-            SELECT posts.id, title, url, userId, createdAt, updatedAt
+            SELECT posts.id, posts.title, posts.url, posts.userId, posts.createdAt, posts.updatedAt,
+            users.id, users.username, users.createdAt, users.updatedAt
             FROM posts
             JOIN users ON posts.userId = users.id
             ORDER BY createdAt DESC
