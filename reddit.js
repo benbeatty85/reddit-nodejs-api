@@ -35,7 +35,7 @@ class RedditAPI {
         return this.conn.query(
             `
             INSERT INTO posts (userId, title, url, createdAt, updatedAt)
-            VALUES (?, ?, ?, NOW(). NOW())`,
+            VALUES (?, ?, ?, NOW(), NOW())`,
             [post.userId, post.title, post.url]
         )
             .then(result => {
@@ -55,11 +55,14 @@ class RedditAPI {
          */
         return this.conn.query(
             `
-            SELECT id, title, url, userId, createdAt, updatedAt
+            SELECT posts.id, title, url, userId, createdAt, updatedAt
             FROM posts
+            JOIN users ON posts.userId = users.id
             ORDER BY createdAt DESC
             LIMIT 25`
         );
+        
+        
     }
 }
 
