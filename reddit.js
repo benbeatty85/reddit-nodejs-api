@@ -116,6 +116,33 @@ class RedditAPI {
         });
     }
     
+    getAllSubreddits() {
+       
+        return this.conn.query(
+            `SELECT subId, name, description, subCreatedAt, subUpdatedAt FROM subreddits
+            ORDER BY subCreatedAt DESC`
+        )
+        .then(function(queryResponse) {
+            return queryResponse.map(function(subreddits) {
+                // return {
+                //     "id": subreddits.subId,
+                //     "name": subreddits.name,
+                //     "description": subreddits.description,
+                //     "createdAt": posts.createdAt,
+                //     "updatedAt": posts.updatedAt
+                // };
+                console.log({
+                    "id": subreddits.subId,
+                    "name": subreddits.name,
+                    "description": subreddits.description,
+                    "createdAt": subreddits.subCreatedAt,
+                    "updatedAt": subreddits.subUpdatedAt
+                    
+                    });
+            });
+        });
+    }
+    
     
 }
 
