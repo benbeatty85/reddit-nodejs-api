@@ -60,38 +60,38 @@ class RedditAPI {
             SELECT posts.postId, posts.title, posts.url, posts.userId, posts.createdAt, posts.updatedAt,
             users.id, users.username, users.userCreatedAt, users.userUpdatedAt
             FROM posts
-            JOIN users ON posts.userId = users.id
+            LEFT JOIN users ON posts.userId = users.id
             ORDER BY posts.createdAt DESC
             LIMIT 25`
         )
         .then(function(queryResponse) {
             return queryResponse.map(function(posts) {
-                return {
-                    "id": posts.postId,
-                    "title": posts.title,
-                    "url": posts.url,
-                    "createdAt": posts.createdAt,
-                    "updatedAt": posts.updatedAt,
-                    "user": {
-                        "id": posts.usersId,
-                        "username": posts.username,
-                        "createdAt": posts.userCreatedAt,
-                        "updatedAt": posts.userUpdatedAt,
-                    }
-                };
-                // console.log({
+                // return {
                 //     "id": posts.postId,
                 //     "title": posts.title,
                 //     "url": posts.url,
                 //     "createdAt": posts.createdAt,
                 //     "updatedAt": posts.updatedAt,
                 //     "user": {
-                //         "id": posts.userId,
+                //         "id": posts.usersId,
                 //         "username": posts.username,
                 //         "createdAt": posts.userCreatedAt,
                 //         "updatedAt": posts.userUpdatedAt,
                 //     }
-                //     });
+                // };
+                console.log({
+                    "id": posts.postId,
+                    "title": posts.title,
+                    "url": posts.url,
+                    "createdAt": posts.createdAt,
+                    "updatedAt": posts.updatedAt,
+                    "user": {
+                        "id": posts.userId,
+                        "username": posts.username,
+                        "createdAt": posts.userCreatedAt,
+                        "updatedAt": posts.userUpdatedAt,
+                    }
+                    });
             });
         });
     }

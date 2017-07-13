@@ -20,7 +20,7 @@ var myReddit = new RedditAPI(connection);
 // We call this function to create a new user to test our API
 // The function will return the newly created user's ID in the callback
 myReddit.createUser({
-    username: 'Stu',
+    username: 'Lisa',
     password: 'abc123'
 })
     .then(newUserId => {
