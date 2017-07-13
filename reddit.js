@@ -81,9 +81,11 @@ class RedditAPI {
         return this.conn.query(
             `
             SELECT posts.postId, posts.title, posts.url, posts.userId, posts.createdAt, posts.updatedAt,
-            users.id, users.username, users.userCreatedAt, users.userUpdatedAt
+            users.id, users.username, users.userCreatedAt, users.userUpdatedAt,
+            subreddits.subId, subreddits.name, subreddits.description, subreddits.subCreatedAt, subreddits.subUpdatedAt
             FROM posts
-            LEFT JOIN users ON posts.userId = users.id
+            JOIN users ON posts.userId = users.id
+            LEFT JOIN subreddits ON posts.subredditId = subredditId
             ORDER BY posts.createdAt DESC
             LIMIT 25`
         )
