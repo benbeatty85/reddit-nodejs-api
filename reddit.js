@@ -36,12 +36,15 @@ class RedditAPI {
     createPost(post) {
         return this.conn.query(
             `
-            INSERT INTO posts (userId, title, url, createdAt, updatedAt)
-            VALUES (?, ?, ?, NOW(), NOW())`,
-            [post.userId, post.title, post.url]
+            INSERT INTO posts (userId, title, url, createdAt, updatedAt, subredditId)
+            VALUES (?, ?, ?, NOW(), NOW(), ?)`,
+            [post.userId, post.title, post.url, post.subredditId]
         )
             .then(result => {
                 return result.insertId;
+            })
+            .catch(error => {
+                throw error;
             });
     }
     
@@ -57,7 +60,7 @@ class RedditAPI {
             .catch(error => {
                 // Special error handling for duplicate entry
                 if (error.code === 'ER_DUP_ENTRY') {
-                    throw new Error('This subreddit with this name already exists.');
+                    throw new Error('A subreddit with this name already exists.');
                 }
                 else {
                     throw error;
