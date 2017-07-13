@@ -44,6 +44,26 @@ class RedditAPI {
                 return result.insertId;
             });
     }
+    
+      createSubreddit(subreddit) {
+            return this.conn.query(`
+            
+            INSERT INTO subreddits (name,description,subCreatedAt,subUpdatedAt) 
+            VALUES (?, ?, NOW(), NOW())`, [subreddit.name, subreddit.description])
+            
+            .then(result => {
+                return result.insertId;
+            })
+            .catch(error => {
+                // Special error handling for duplicate entry
+                if (error.code === 'ER_DUP_ENTRY') {
+                    throw new Error('This subreddit with this name already exists.');
+                }
+                else {
+                    throw error;
+                }
+            });
+    }
 
     getAllPosts() {
         /*
