@@ -1,3 +1,5 @@
+'use strict'
+
 var bcrypt = require('bcrypt-as-promised');
 var HASH_ROUNDS = 10;
 
@@ -15,7 +17,7 @@ class RedditAPI {
          */
         return bcrypt.hash(user.password, HASH_ROUNDS)
             .then(hashedPassword => {
-                return this.conn.query('INSERT INTO users (username,password, createdAt, updatedAt) VALUES (?, ?, NOW(), NOW())', [user.username, hashedPassword]);
+                return this.conn.query('INSERT INTO users (username,password, userCreatedAt, userUpdatedAt) VALUES (?, ?, NOW(), NOW())', [user.username, hashedPassword]);
             })
             .then(result => {
                 return result.insertId;
@@ -55,16 +57,46 @@ class RedditAPI {
          */
         return this.conn.query(
             `
-            SELECT posts.id, posts.title, posts.url, posts.userId, posts.createdAt, posts.updatedAt,
-            users.id, users.username, users.createdAt, users.updatedAt
+            SELECT posts.postId, posts.title, posts.url, posts.userId, posts.createdAt, posts.updatedAt,
+            users.id, users.username, users.userCreatedAt, users.userUpdatedAt
             FROM posts
             JOIN users ON posts.userId = users.id
-            ORDER BY createdAt DESC
+            ORDER BY posts.createdAt DESC
             LIMIT 25`
-        );
-        
-        
+        )
+        .then(function(queryResponse) {
+            return queryResponse.map(function(posts) {
+                return {
+                    "id": posts.postId,
+                    "title": posts.title,
+                    "url": posts.url,
+                    "createdAt": posts.createdAt,
+                    "updatedAt": posts.updatedAt,
+                    "user": {
+                        "id": posts.usersId,
+                        "username": posts.username,
+                        "createdAt": posts.userCreatedAt,
+                        "updatedAt": posts.userUpdatedAt,
+                    }
+                };
+                // console.log({
+                //     "id": posts.postId,
+                //     "title": posts.title,
+                //     "url": posts.url,
+                //     "createdAt": posts.createdAt,
+                //     "updatedAt": posts.updatedAt,
+                //     "user": {
+                //         "id": posts.userId,
+                //         "username": posts.username,
+                //         "createdAt": posts.userCreatedAt,
+                //         "updatedAt": posts.userUpdatedAt,
+                //     }
+                //     });
+            });
+        });
     }
+    
+    
 }
 
 module.exports = RedditAPI;
