@@ -165,6 +165,15 @@ class RedditAPI {
     }
     
     createVote(vote) {
+        return this.conn.query(
+        `INSERT INTO votes SET postId=?, userId=?, voteDirection=? ON DUPLICATE KEY UPDATE voteDirection=?;`
+            )
+        .then(function(queryResponse) {
+            if (vote.voteDirection !== 1 && vote.voteDirection !== 0 && vote.voteDirection !== -1) {
+            throw new Error('Please vote again, invalid vote');
+        }
+        })
+        
         
     }
     
