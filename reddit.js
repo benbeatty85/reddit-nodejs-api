@@ -103,6 +103,14 @@ class RedditAPI {
                 //         "createdAt": posts.userCreatedAt,
                 //         "updatedAt": posts.userUpdatedAt,
                 //     }
+            //},
+                    // "subreddit": {
+                    //     "id": posts.subredditId,
+                    //     "name": posts.name,
+                    //     "description": posts.description,
+                    //     "CreatedAt": posts.subCreatedAt,
+                    //     "UpdatedAt": posts.subUpdatedAt
+                    // }
                 // };
                 console.log({
                     "id": posts.postId,
@@ -115,11 +123,18 @@ class RedditAPI {
                         "username": posts.username,
                         "createdAt": posts.userCreatedAt,
                         "updatedAt": posts.userUpdatedAt,
+                    },
+                    "subreddit": {
+                        "id": posts.subredditId,
+                        "name": posts.name,
+                        "description": posts.description,
+                        "CreatedAt": posts.subCreatedAt,
+                        "UpdatedAt": posts.subUpdatedAt
                     }
                     });
             });
         });
-    }
+}
     
     getAllSubreddits() {
        
