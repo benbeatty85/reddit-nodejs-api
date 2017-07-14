@@ -3,13 +3,16 @@ var mysql = require('promise-mysql');
 var RedditAPI = require('./reddit');
 
 function getSubreddits() {
-    return request(/* fill in the URL, it's always the same */)
+    return request('https://www.reddit.com/.json')
         .then(response => {
             // Parse response as JSON and store in variable called result
-            var response; // continue this line
+            var response = JSON.parse(response); // continue this line
 
             // Use .map to return a list of subreddit names (strings) only
-            return response.data.children.map(/* write a function */)
+            return response.data.children.map(function(newObject) {
+                console.log(newObject.data.subreddit);
+                //return newObject.data.subreddit;
+            })
         });
 }
 
