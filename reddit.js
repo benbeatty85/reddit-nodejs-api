@@ -92,51 +92,30 @@ class RedditAPI {
         )
         .then(function(queryResponse) {
             return queryResponse.map(function(posts) {
-                // return {
-                //     "id": posts.postId,
-                //     "title": posts.title,
-                //     "url": posts.url,
-                //     "createdAt": posts.createdAt,
-                //     "updatedAt": posts.updatedAt,
-                //     "user": {
-                //         "id": posts.usersId,
-                //         "username": posts.username,
-                //         "createdAt": posts.userCreatedAt,
-                //         "updatedAt": posts.userUpdatedAt,
-                //     }
-                 //     "subreddit": {
-                    //     "id": posts.subredditId,
-                    //     "name": posts.name,
-                    //     "description": posts.description,
-                    //     "CreatedAt": posts.subCreatedAt,
-                    //     "UpdatedAt": posts.subUpdatedAt
-                    // }
-                // };
-            //},
-                   
-                console.log({
+                return {
                     "id": posts.postId,
                     "title": posts.title,
                     "url": posts.url,
                     "createdAt": posts.createdAt,
                     "updatedAt": posts.updatedAt,
                     "user": {
-                        "id": posts.userId,
+                        "id": posts.usersId,
                         "username": posts.username,
                         "createdAt": posts.userCreatedAt,
                         "updatedAt": posts.userUpdatedAt,
                     },
-                    "subreddit": {
+                    "subreddits": {
                         "id": posts.subredditId,
                         "name": posts.name,
                         "description": posts.description,
                         "CreatedAt": posts.subCreatedAt,
                         "UpdatedAt": posts.subUpdatedAt
-                    }
-                    });
-            });
+                    },
+                };
+            })
+                   
         });
-}
+    };
     
     getAllSubreddits() {
        
@@ -146,21 +125,13 @@ class RedditAPI {
         )
         .then(function(queryResponse) {
             return queryResponse.map(function(subreddits) {
-                // return {
-                //     "id": subreddits.subId,
-                //     "name": subreddits.name,
-                //     "description": subreddits.description,
-                //     "createdAt": posts.createdAt,
-                //     "updatedAt": posts.updatedAt
-                // };
-                console.log({
+                return {
                     "id": subreddits.subId,
                     "name": subreddits.name,
                     "description": subreddits.description,
-                    "createdAt": subreddits.subCreatedAt,
-                    "updatedAt": subreddits.subUpdatedAt
-                    
-                    });
+                    "createdAt": posts.createdAt,
+                    "updatedAt": posts.updatedAt
+                };
             });
         });
     }
