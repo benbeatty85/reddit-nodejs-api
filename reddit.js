@@ -80,7 +80,7 @@ class RedditAPI {
          */
         return this.conn.query(
             `
-            SELECT posts.postId, posts.title, posts.url, posts.userId, posts.createdAt, posts.updatedAt,
+            SELECT posts.postId, posts.title, posts.url, posts.userId, posts.createdAt, posts.updatedAt, posts.subredditId,
             users.id, users.username, users.userCreatedAt, users.userUpdatedAt,
             subreddits.subId, subreddits.name, subreddits.description, subreddits.subCreatedAt, subreddits.subUpdatedAt
             FROM posts
@@ -103,8 +103,7 @@ class RedditAPI {
                 //         "createdAt": posts.userCreatedAt,
                 //         "updatedAt": posts.userUpdatedAt,
                 //     }
-            //},
-                    // "subreddit": {
+                 //     "subreddit": {
                     //     "id": posts.subredditId,
                     //     "name": posts.name,
                     //     "description": posts.description,
@@ -112,6 +111,8 @@ class RedditAPI {
                     //     "UpdatedAt": posts.subUpdatedAt
                     // }
                 // };
+            //},
+                   
                 console.log({
                     "id": posts.postId,
                     "title": posts.title,
@@ -161,6 +162,10 @@ class RedditAPI {
                     });
             });
         });
+    }
+    
+    createVote(vote) {
+        
     }
     
     
