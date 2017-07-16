@@ -129,8 +129,8 @@ class RedditAPI {
                     "id": subreddits.subId,
                     "name": subreddits.name,
                     "description": subreddits.description,
-                    "createdAt": posts.createdAt,
-                    "updatedAt": posts.updatedAt
+                    "createdAt": subreddits.subCreatedAt,
+                    "updatedAt": subreddits.subUpdatedAt
                 };
             });
         });

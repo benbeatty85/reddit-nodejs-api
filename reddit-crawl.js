@@ -97,7 +97,7 @@ function crawl() {
                                     username: post.user,
                                     password: 'abc123'
                             })
-                            .catch(function(err) {
+                            .catch(function(error) {
                                     return users[post.user];
                                 })
                             }
@@ -118,3 +118,5 @@ function crawl() {
         
         getSubreddits();
 }
+
+getSubreddits();
