@@ -1,6 +1,9 @@
 var express = require('express');
 var app = express();
 
+
+//Exercise 2
+
 // app.get('/hello', function (req, res) {
 //   var name = req.query.name;
   
@@ -10,6 +13,9 @@ var app = express();
 //     res.send('<h1>Hello World!</h1>');
 //   }
 // });
+
+
+//Exercise 3
 
 app.get('/calculator/:operation', function (req, res) {
   
@@ -44,6 +50,11 @@ app.get('/calculator/:operation', function (req, res) {
      
     res.end(JSON.stringify(newOpObject, null, 2));
 });
+
+
+//Exercise 4
+
+
   
 
 
