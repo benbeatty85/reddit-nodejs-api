@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser')
 
 // load the mysql library
 var mysql = require('promise-mysql');
@@ -13,7 +14,7 @@ var connection = mysql.createPool({
 });
 // load our API and pass it the connection
 var RedditAPI = require('./reddit');
-
+var myReddit = new RedditAPI(connection);
 
 //Exercise 1
 
@@ -84,7 +85,6 @@ app.get('/calculator/:operation', function (req, res) {
 //Exercise 4
 
 app.get('/posts', (req, res) => {
-  var myReddit = new RedditAPI(connection);
   myReddit.getAllPosts()
   .then(posts => {
   
@@ -133,20 +133,35 @@ app.get('/new-post', function (req, res) {
 
 //Exercise 6
 
-//middleware
-
-//app.use((req, res, next) => {
-//   console.log('a new requst comes in!' + req.url);
-// next(); //move to the next middleware
-// });
-
 //npm install body-parser (for this question)
 //var bodyParser = require('body-parser') (place ontop of page)
 
-// app.post('/createPost', bodyParser.urlencoded({extended:false}), (req, res) => {
-//   console.log(req.body);
-//   res.send('thank you we got your request.');
-// });
+var urlEncode = bodyParser.urlencoded({extended:false});
+
+app.post('/createPost', urlEncode, function (req, res) {
+  
+  if (!req.body) return res.sendStatus(400);
+  
+ var newPost = {};
+     newPost.url = req.body.url;
+     newPost.title = req.body.title;
+     newPost.userId = 1;
+     newPost.subredditId = 1;
+  
+     myReddit.createPost(newPost)
+       .then(results => 
+       {
+        res.redirect('/posts');
+       })
+       .catch(error => {
+         console.log("You have an error");
+         throw error;
+       });
+ });
+ 
+ //Exercise 7
+ 
+ 
 
 
   
