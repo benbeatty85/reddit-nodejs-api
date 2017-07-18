@@ -2,14 +2,14 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser')
 var pug = require('pug');
-app.set('view engine', 'pug');
+
 
 // load the mysql library
 var mysql = require('promise-mysql');
 // create a connection to our Cloud9 server
 var connection = mysql.createPool({
     host     : 'localhost',
-    user     : 'benbeatty85', // CHANGE THIS :)
+    user     : 'root', // CHANGE THIS :)
     password : '',
     database: 'reddit',
     connectionLimit: 10
@@ -131,7 +131,7 @@ app.post('/createPost', urlEncode, function (req, res) {
        });
  });
  
- 
+ app.set('view engine', 'pug');
  
 
 
