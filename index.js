@@ -1,6 +1,8 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser')
+var pug = require('pug');
+app.set('view engine', 'pug');
 
 // load the mysql library
 var mysql = require('promise-mysql');
@@ -87,28 +89,8 @@ app.get('/calculator/:operation', function (req, res) {
 app.get('/posts', (req, res) => {
   myReddit.getAllPosts()
   .then(posts => {
-  
-    
-    var html = `
-    <div id ="posts">
-      <h1>List of posts</h1>
-        <ul class = "posts-list">`;
-        
-        posts.forEach(post => {
-          html += `
-          <li>
-            <h2>${post.title}</h2>
-          </li>
-          `
-        });
-        
-        var postsHTMLString = html + `
-                 </ul>
-            </div>`;
-    //console.log(html, " this is our list of posts");
-    
-    res.send(postsHTMLString);
-  })
+  res.render('post-list', {posts: posts});
+   })
   .catch(err => {
     res.status(500).send(err.stack);
   });
@@ -117,18 +99,8 @@ app.get('/posts', (req, res) => {
 
 //Exercise 5
 
-app.get('/new-post', function (req, res) {
-  res.send(`
-  <form action="/createPost" method="POST"><!-- why does it say method="POST" ?? -->
-  <p>
-    <input type="text" name="url" placeholder="Enter a URL to content">
-  </p>
-  <p>
-    <input type="text" name="title" placeholder="Enter the title of your content">
-  </p>
-  <button type="submit">Create!</button>
-</form>`
-  );
+app.get('/createPost', function (req, res) {
+  res.render('create-content');
 });
 
 //Exercise 6
@@ -159,7 +131,6 @@ app.post('/createPost', urlEncode, function (req, res) {
        });
  });
  
- //Exercise 7
  
  
 
