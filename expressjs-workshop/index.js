@@ -15,16 +15,25 @@ var connection = mysql.createPool({
 var RedditAPI = require('./reddit');
 var myReddit = new RedditAPI(connection);
 
+//Exercise 1
 
+app.get('/hello', (req,res) => {
+  res.send('<h1>Hello World!</h1>');
+});
 
 
 //Exercise 2
 
+
+//hello?firstName=John&lastName=Smith
+
+//How to encode special characters in console.log
+//encodeURIComponent('hello='); 
+
 app.get('/hello', function (req, res) {
-  var name = req.query.name;
   
-  if (name) {
-    res.send('<h1> Hello ' + name + '!</h1>');
+  if (req.query.firstName && req.query.lastName) {
+    res.send(`<h1>Hello ${req.query.firstName} ${req.query.lastName}</h1>`);
   } else {
     res.send('<h1>Hello World!</h1>');
   }
