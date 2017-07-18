@@ -19,7 +19,9 @@ CREATE TABLE posts (
   createdAt DATETIME NOT NULL,
   updatedAt DATETIME NOT NULL,
   KEY userId (userId), -- why did we add this here? ask me :)
-  CONSTRAINT validUser FOREIGN KEY (userId) REFERENCES users (id) ON DELETE SET NULL
+  CONSTRAINT validUser FOREIGN KEY (userId) REFERENCES users (id) ON DELETE SET NULL,
+  KEY subredditId (subredditId),
+  CONSTRAINT validSubreddit FOREIGN KEY (subredditId) REFERENCES subreddits (subId) ON DELETE SET NULL
 ); 
 
 ALTER TABLE posts ADD (

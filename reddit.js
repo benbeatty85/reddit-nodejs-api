@@ -36,8 +36,8 @@ class RedditAPI {
     createPost(post) {
         return this.conn.query(
             `
-            INSERT INTO posts (userId, title, url, createdAt, updatedAt, subredditId)
-            VALUES (?, ?, ?, NOW(), NOW(), ?)`,
+            INSERT INTO posts (userId, title, url, subredditId, createdAt, updatedAt)
+            VALUES (?, ?, ?, ?, NOW(), NOW())`,
             [post.userId, post.title, post.url, post.subredditId]
         )
             .then(result => {
@@ -49,6 +49,7 @@ class RedditAPI {
     }
     
       createSubreddit(subreddit) {
+          console.log(subreddit, "the subreddits")
             return this.conn.query(`
             
             INSERT INTO subreddits (name,description,subCreatedAt,subUpdatedAt) 
