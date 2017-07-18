@@ -74,7 +74,38 @@ app.get('/calculator/:operation', function (req, res) {
 
 //Exercise 4
 
-
+app.get('/posts', function (req, res) {
+  //call getAllPosts, then start the list, then do a forEach where you 
+  //display each li, then close the ul. 
+var myReddit = new RedditAPI(connection);  
+var postList = 
+  `<!DOCTYPE html>
+    <body>
+      <div id="posts">
+          <h1>List of posts</h1>
+          <ul class="posts-list">`;
+myReddit.getAllPosts()
+.then (function(posts) {
+    posts.forEach(function(post) {
+     postList = postList + 
+    `<li class="post-item">
+      <h2 class="post-item__title">
+        <a href=` + `" `+ posts.url + `"` + `>` + posts.title + `</a>
+      </h2>
+      <p>Created by `+ posts.user.username + `</p>
+     </li>`;
+    });
+  })
+.then(function(result) {
+    res.send(
+      postList = postList + 
+    ` </ul>
+    </div>
+    </body>
+    </html>`
+    );
+  });
+});
 
 
 //Exercise 5
