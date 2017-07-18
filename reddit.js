@@ -86,8 +86,9 @@ class RedditAPI {
             subreddits.subId, subreddits.name, subreddits.description, subreddits.subCreatedAt, subreddits.subUpdatedAt, SUM(votes.voteDirection)
             FROM posts
             JOIN users ON posts.userId = users.id
-            LEFT JOIN subreddits ON posts.subredditId = subreddits.subId
+            JOIN subreddits ON posts.subredditId = subreddits.subId
             LEFT JOIN votes ON votes.postId = posts.postId
+            GROUP BY postId
             ORDER BY SUM(votes.voteDirection) DESC
             LIMIT 25`
         )

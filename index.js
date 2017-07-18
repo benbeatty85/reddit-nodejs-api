@@ -13,7 +13,7 @@ var connection = mysql.createPool({
 });
 // load our API and pass it the connection
 var RedditAPI = require('./reddit');
-var myReddit = new RedditAPI(connection);
+
 
 //Exercise 1
 
@@ -83,36 +83,34 @@ app.get('/calculator/:operation', function (req, res) {
 
 //Exercise 4
 
-app.get('/posts', function (req, res) {
-  //call getAllPosts, then start the list, then do a forEach where you 
-  //display each li, then close the ul. 
-var myReddit = new RedditAPI(connection);  
-var postList = 
-  `<!DOCTYPE html>
-    <body>
-      <div id="posts">
-          <h1>List of posts</h1>
-          <ul class="posts-list">`;
-myReddit.getAllPosts()
-.then (function(posts) {
-    posts.forEach(function(post) {
-     postList = postList + 
-    `<li class="post-item">
-      <h2 class="post-item__title">
-        <a href=` + `" `+ posts.url + `"` + `>` + posts.title + `</a>
-      </h2>
-      <p>Created by `+ posts.user.username + `</p>
-     </li>`;
-    });
+app.get('/posts', (req, res) => {
+  var myReddit = new RedditAPI(connection);
+  myReddit.getAllPosts()
+  .then(posts => {
+  
+    
+    var html = `
+    <div id ="posts">
+      <h1>List of posts</h1>
+        <ul class = "posts-list">`;
+        
+        posts.forEach(post => {
+          html += `
+          <li>
+            <h2>${post.title}</h2>
+          </li>
+          `
+        });
+        
+        var postsHTMLString = html + `
+                 </ul>
+            </div>`;
+    //console.log(html, " this is our list of posts");
+    
+    res.send(postsHTMLString);
   })
-.then(function(result) {
-    res.send(
-      postList = postList + 
-    ` </ul>
-    </div>
-    </body>
-    </html>`
-    );
+  .catch(err => {
+    res.status(500).send(err.stack);
   });
 });
 
@@ -135,7 +133,20 @@ app.get('/new-post', function (req, res) {
 
 //Exercise 6
 
+//middleware
 
+//app.use((req, res, next) => {
+//   console.log('a new requst comes in!' + req.url);
+// next(); //move to the next middleware
+// });
+
+//npm install body-parser (for this question)
+//var bodyParser = require('body-parser') (place ontop of page)
+
+// app.post('/createPost', bodyParser.urlencoded({extended:false}), (req, res) => {
+//   console.log(req.body);
+//   res.send('thank you we got your request.');
+// });
 
 
   
